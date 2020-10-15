@@ -1,5 +1,5 @@
 .custom-button {
-    min-width: 165px;
+    min-width: 45%;
     width: auto;
     height: 50px;
     letter-spacing: 0.5px;
@@ -13,6 +13,17 @@
     font-weight: bolder;
     border: none;
     cursor: pointer;
+
+    &.google-btn {
+      background-color: #4285f4;
+      color: #fff;
+
+      &:hover {
+        background-color: #357ae8;
+        border: none;
+        color: #fff;
+      }
+    }
   
     &:hover {
       background-color: white;
