@@ -1,26 +1,46 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {ReactComponent as Logo} from '../../assets/crown.svg';
-import {auth} from '../../firebase/firebase.utils';
+import React from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-import './header.styles.scss';
+import "./header.styles.scss";
 
-const Header = ({currentUser}) => (
-    <div className='header'>
-        <Link className='logo-container' to='/'>
-            <Logo className='logo' />
-        </Link>
-        <div className='options'>
-            <Link className='option' to='/shop'>SHOP</Link>
-            <Link className='option' to='/contact'>CONTACT</Link>
-            {
-            currentUser ? 
-                <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>
-            :
-                <Link className='option' to='/signin'>SIGN IN</Link>
-            }
+import { ReactComponent as Logo } from "../../assets/crown.svg";
+import { auth } from "../../firebase/firebase.utils";
+import { ReactComponent as CartIcon } from "../../assets/shopping-bag.svg";
+
+const Header = ({ currentUser }) => (
+  <div className="header">
+    <Link className="logo-container" to="/">
+      <Logo className="logo" />
+    </Link>
+    <div className="options">
+      <Link className="option" to="/shop">
+        SHOP
+      </Link>
+      <Link className="option" to="/contact">
+        CONTACT
+      </Link>
+      {currentUser ? (
+        <div className="option" onClick={() => auth.signOut()}>
+          SIGN OUT
         </div>
+      ) : (
+        <Link className="option" to="/signin">
+          SIGN IN
+        </Link>
+      )}
+      <div className="cart-icon">
+        <CartIcon className="shopping-icon" />
+        <span className="item-count">0</span>
+      </div>
     </div>
+  </div>
 );
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.user.currentUser,
+  };
+};
+
+export default connect(mapStateToProps)(Header);
