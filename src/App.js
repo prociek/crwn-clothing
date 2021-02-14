@@ -15,18 +15,18 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    const { onSetCurrentUser } = this.props;
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        userRef.onSnapshot((snapShot) => {
-          setCurrentUser({
+        userRef.onSnapshot(snapShot => {
+          onSetCurrentUser({
             id: snapShot.id,
-            ...snapShot.data(),
+            ...snapShot.data()
           });
         });
       } else {
-        setCurrentUser(userAuth);
+        onSetCurrentUser(userAuth);
       }
     });
   }
@@ -45,7 +45,7 @@ class App extends React.Component {
           <Route
             exact
             path="/signin"
-            render={(props) =>
+            render={props =>
               this.props.currentUser ? (
                 <Redirect to="/" />
               ) : (
@@ -59,15 +59,15 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
-    currentUser: state.user.currentUser,
+    currentUser: state.user.currentUser
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+    onSetCurrentUser: user => dispatch(setCurrentUser(user))
   };
 };
 
