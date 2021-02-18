@@ -1,6 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import "./App.css";
 
@@ -10,6 +11,8 @@ import Header from "./components/header/header.component";
 import SignInSignUpPage from "./pages/sign-in-sign-up-page/sign-in-sign-up-page.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./store/actions";
+import { selsectCurrentUser } from "./store/selector/user";
+import { selectCartHidden } from "./store/selector/cart";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -59,11 +62,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.user.currentUser
-  };
-};
+const mapStateToProps = createStructuredSelector({
+  currentUser: selsectCurrentUser
+});
 
 const mapDispatchToProps = dispatch => {
   return {
