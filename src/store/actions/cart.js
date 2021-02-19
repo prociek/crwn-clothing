@@ -12,3 +12,17 @@ export const addItem = item => {
     item
   };
 };
+
+export const removeItem = id => {
+  return {
+    type: actionTypes.REMOVE_ITEM,
+    id
+  };
+};
+
+export const decreaseItem = item => {
+  return {
+    type: actionTypes.DECREASE_ITEM,
+    item
+  };
+};

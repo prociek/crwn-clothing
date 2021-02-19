@@ -1,2 +1,2 @@
 export { setCurrentUser } from "./user";
-export { toggleHiddenCart, addItem } from "./cart";
+export { toggleHiddenCart, addItem, removeItem, decreaseItem } from "./cart";
