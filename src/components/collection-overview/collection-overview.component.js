@@ -4,6 +4,7 @@ import { createStructuredSelector } from "reselect";
 
 import CollectionPreview from "../collection-preview/collection-preview.component";
 import { selectCollectionsForPreview } from "../../store/selector/shop";
+import withSpinner from "../../hocs/with-spinner/with-spinner";
 
 const CollectionOverview = ({ collections }) => (
   <section>
@@ -17,4 +18,4 @@ const mapStateToProps = createStructuredSelector({
   collections: selectCollectionsForPreview
 });
 
-export default connect(mapStateToProps)(CollectionOverview);
+export default withSpinner(connect(mapStateToProps)(CollectionOverview));

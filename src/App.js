@@ -11,13 +11,12 @@ import CheckoutPage from "./pages/checkout/checkout.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { setCurrentUser } from "./store/actions";
 import { selsectCurrentUser } from "./store/selector/user";
-import { selectCartHidden } from "./store/selector/cart";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { onSetCurrentUser } = this.props;
+    const { onSetCurrentUser, collections } = this.props;
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);

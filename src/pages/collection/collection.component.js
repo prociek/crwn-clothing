@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import { selectCollection } from "../../store/selector/shop";
+import withSpinner from "../../hocs/with-spinner/with-spinner";
 
 import {
   CollectionContainer,
@@ -29,4 +30,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(CollectionPage);
+export default withSpinner(connect(mapStateToProps)(CollectionPage));

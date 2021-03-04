@@ -1,11 +1,16 @@
-import SHOP_DATA from "./shop.data";
+import * as actionTypes from "../actionTypes";
 
 const INITIAL_STATE = {
-  collections: SHOP_DATA
+  collections: null
 };
 
-const shopReducer = (state = INITIAL_STATE, aciton) => {
-  switch (aciton.type) {
+const shopReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    case actionTypes.FETCH_COLLECTIONS:
+      return {
+        ...state,
+        collections: action.collections
+      };
     default:
       return state;
   }
