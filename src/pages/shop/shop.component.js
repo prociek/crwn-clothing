@@ -1,47 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
 
-import CollectionOverview from "../../components/collection-overview/collection-overview.component";
-import CollectionPage from "../collection/collection.component";
+import CollectionOverview from "../../containers/collection-overview/collection-overview.container";
+import CollectionPage from "../../containers/collection/collection.container";
 
-import {
-  firestore,
-  convertCollectionsSnapshotToMap
-} from "../../firebase/firebase.utils";
-import { fetchCollections } from "../../store/actions";
+import { fetchCollectionsAsync } from "../../store/actions";
+import { selectLoading } from "../../store/selector/shop";
 
-const ShopPage = ({ match, onFetchCollections }) => {
-  const [isLoading, setIsLoading] = useState(true);
-
+const ShopPage = ({ match, onFetchCollectionsAsync, loading }) => {
   useEffect(() => {
-    const collectionRef = firestore.collection("collections");
-    const unsubscribeFromSnapshot = collectionRef.onSnapshot(async snapshot => {
-      onFetchCollections(convertCollectionsSnapshotToMap(snapshot));
-      setIsLoading(false);
-    });
-    return () => unsubscribeFromSnapshot();
+    onFetchCollectionsAsync();
   }, []);
   return (
     <React.Fragment>
-      <Route
-        exact
-        path={match.path}
-        render={props => (
-          <CollectionOverview isLoading={isLoading} {...props} />
-        )}
-      />
-      <Route
-        path={`${match.path}/:collectionId`}
-        render={props => <CollectionPage isLoading={isLoading} {...props} />}
-      />
+      <Route exact path={match.path} component={CollectionOverview} />
+      <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
     </React.Fragment>
   );
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchCollections: collections => dispatch(fetchCollections(collections))
+    onFetchCollectionsAsync: () => dispatch(fetchCollectionsAsync())
   };
 };
 

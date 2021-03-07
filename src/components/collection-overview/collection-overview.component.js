@@ -18,4 +18,4 @@ const mapStateToProps = createStructuredSelector({
   collections: selectCollectionsForPreview
 });
 
-export default withSpinner(connect(mapStateToProps)(CollectionOverview));
+export default connect(mapStateToProps)(CollectionOverview);

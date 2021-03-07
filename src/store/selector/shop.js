@@ -25,3 +25,5 @@ export const selectCollection = collectionUrlParam =>
   createSelector(selectCollections, collections =>
     collections ? collections[collectionUrlParam] : null
   );
+
+export const selectLoading = createSelector(selectShop, shop => shop.loading);

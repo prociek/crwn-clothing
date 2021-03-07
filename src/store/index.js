@@ -2,6 +2,7 @@ import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 
 const persistConfig = {
@@ -12,7 +13,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const middlewares = [];
+const middlewares = [thunk];
 
 if (process.env.NODE_ENV === "development") middlewares.push(logger);
 
