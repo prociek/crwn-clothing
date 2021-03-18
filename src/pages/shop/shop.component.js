@@ -1,17 +1,14 @@
 import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import { connect } from "react-redux";
-import { createStructuredSelector } from "reselect";
 
 import CollectionOverview from "../../containers/collection-overview/collection-overview.container";
 import CollectionPage from "../../containers/collection/collection.container";
+import { fetchCollectionsStart } from "../../store/actions/shop";
 
-import { fetchCollectionsAsync } from "../../store/actions";
-import { selectLoading } from "../../store/selector/shop";
-
-const ShopPage = ({ match, onFetchCollectionsAsync, loading }) => {
+const ShopPage = ({ match, onFetchCollectionsStart }) => {
   useEffect(() => {
-    onFetchCollectionsAsync();
+    onFetchCollectionsStart();
   }, []);
   return (
     <React.Fragment>
@@ -23,7 +20,7 @@ const ShopPage = ({ match, onFetchCollectionsAsync, loading }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchCollectionsAsync: () => dispatch(fetchCollectionsAsync())
+    onFetchCollectionsStart: () => dispatch(fetchCollectionsStart())
   };
 };
 
