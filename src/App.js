@@ -9,29 +9,12 @@ import Header from "./components/header/header.component";
 import SignInSignUpPage from "./pages/sign-in-sign-up-page/sign-in-sign-up-page.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 import { selsectCurrentUser } from "./store/selector/user";
+import { checkUserSession } from "./store/actions/user";
 
 class App extends React.Component {
-  unsubscribeFromAuth = null;
-
   componentDidMount() {
-    // const { onSetCurrentUser } = this.props;
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-    //     userRef.onSnapshot(snapShot => {
-    //       onSetCurrentUser({
-    //         id: snapShot.id,
-    //         ...snapShot.data()
-    //       });
-    //     });
-    //   } else {
-    //     onSetCurrentUser(userAuth);
-    //   }
-    // });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    const { onCheckUserSession } = this.props;
+    onCheckUserSession();
   }
 
   render() {
@@ -63,4 +46,10 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selsectCurrentUser
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    onCheckUserSession: () => dispatch(checkUserSession())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

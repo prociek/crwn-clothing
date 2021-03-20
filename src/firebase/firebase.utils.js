@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
+import { putResolve } from "@redux-saga/core/effects";
 
 const config = {
   apiKey: "AIzaSyAxt2ucHTIejzthU_0op8oGQRW9C1VG92w",
@@ -73,6 +74,18 @@ export const convertCollectionsSnapshotToMap = collections => {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+
+export const isUserAuthenticated = () =>
+  new Promise((resolve, reject) => {
+    try {
+      const unsubscribe = auth.onAuthStateChanged(user => {
+        unsubscribe();
+        resolve(user);
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });

@@ -7,10 +7,10 @@ export const signInSuccess = user => {
   };
 };
 
-export const signInFailure = errorMessage => {
+export const signInFailure = error => {
   return {
     type: actionTypes.SIGN_IN_FAILURE,
-    errorMessage
+    error
   };
 };
 
@@ -20,8 +20,34 @@ export const googleSignInStart = () => {
   };
 };
 
-export const emailSignInStart = () => {
+export const emailSignInStart = user => {
   return {
-    type: actionTypes.EMAIL_SIGN_IN_START
+    type: actionTypes.EMAIL_SIGN_IN_START,
+    user
+  };
+};
+
+export const checkUserSession = () => {
+  return {
+    type: actionTypes.CHECK_USER_SESSION
+  };
+};
+
+export const signOutStart = () => {
+  return {
+    type: actionTypes.SIGN_OUT_START
+  };
+};
+
+export const signOutSuccess = () => {
+  return {
+    type: actionTypes.SIGN_OUT_SUCCESS
+  };
+};
+
+export const signOutFailure = error => {
+  return {
+    type: actionTypes.SIGN_OUT_FAILURE,
+    error
   };
 };

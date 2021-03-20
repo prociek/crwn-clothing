@@ -1,15 +1,20 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import * as actionTypes from "../actionTypes";
-import { signInSuccess, signInFailure } from "../actions/user";
+import {
+  signInSuccess,
+  signInFailure,
+  signOutSuccess,
+  signOutFailure
+} from "../actions/user";
 import {
   auth,
   createUserProfileDocument,
-  googleProvider
+  googleProvider,
+  isUserAuthenticated
 } from "../../firebase/firebase.utils";
 
-export function* googleSignInAsync() {
+function* createUserProfileUtil(user) {
   try {
-    const { user } = yield auth.signInWithPopup(googleProvider);
     const userRef = yield call(createUserProfileDocument, user);
     const snapShot = yield userRef.get();
     yield put(
@@ -19,10 +24,58 @@ export function* googleSignInAsync() {
       })
     );
   } catch (err) {
-    yield put(call(signInFailure(err.message)));
+    yield put(signInFailure(err.message));
   }
 }
 
-export function* googleSignIn() {
+export function* googleSignInAsync() {
+  try {
+    const { user } = yield auth.signInWithPopup(googleProvider);
+    yield createUserProfileUtil(user);
+  } catch (err) {
+    yield put(signInFailure(err.message));
+  }
+}
+
+export function* emailSignInAsync({ user: { email, password } }) {
+  try {
+    const { user } = yield auth.signInWithEmailAndPassword(email, password);
+    yield createUserProfileUtil(user);
+  } catch (err) {
+    yield put(signInFailure(err.message));
+  }
+}
+
+export function* checkUserSessionAsync() {
+  try {
+    const user = yield isUserAuthenticated();
+    yield createUserProfileUtil(user);
+  } catch (err) {
+    yield put(signInFailure(err.message));
+  }
+}
+
+export function* signOut() {
+  try {
+    yield auth.signOut();
+    yield put(signOutSuccess());
+  } catch (err) {
+    yield put(signOutFailure(err));
+  }
+}
+
+export function* onGoogleSignIn() {
   yield takeLatest(actionTypes.GOOGLE_SIGN_IN_START, googleSignInAsync);
+}
+
+export function* onEmailSignIn() {
+  yield takeLatest(actionTypes.EMAIL_SIGN_IN_START, emailSignInAsync);
+}
+
+export function* onCheckUserSession() {
+  yield takeLatest(actionTypes.CHECK_USER_SESSION, checkUserSessionAsync);
+}
+
+export function* onSignOut() {
+  yield takeLatest(actionTypes.SIGN_OUT_START, signOut);
 }
