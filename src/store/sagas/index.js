@@ -1,19 +1,10 @@
 import { all, call } from "redux-saga/effects";
 
-import { fetchCollections } from "./shop";
-import {
-  onGoogleSignIn,
-  onEmailSignIn,
-  onCheckUserSession,
-  onSignOut
-} from "./user";
+import { shopSaga } from "./shop";
+import { userSaga } from "./user";
+
+import { cartSaga } from "./cart";
 
 export default function* rootSaga() {
-  yield all([
-    call(fetchCollections),
-    call(onGoogleSignIn),
-    call(onEmailSignIn),
-    call(onCheckUserSession),
-    call(onSignOut)
-  ]);
+  yield all([call(shopSaga), call(userSaga), call(cartSaga)]);
 }

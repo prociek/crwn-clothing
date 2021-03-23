@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-import { addItem } from "../../store/actions";
+import { addItem } from "../../store/actions/cart";
 
 import {
   CollectionItemContainer,

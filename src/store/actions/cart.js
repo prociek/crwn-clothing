@@ -26,3 +26,9 @@ export const decreaseItem = item => {
     item
   };
 };
+
+export const clearCart = () => {
+  return {
+    type: actionTypes.CLEAR_CART
+  };
+};

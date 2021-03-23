@@ -9,7 +9,8 @@ import { fetchCollectionsStart } from "../../store/actions/shop";
 const ShopPage = ({ match, onFetchCollectionsStart }) => {
   useEffect(() => {
     onFetchCollectionsStart();
-  }, []);
+  }, [onFetchCollectionsStart]);
+
   return (
     <React.Fragment>
       <Route exact path={match.path} component={CollectionOverview} />

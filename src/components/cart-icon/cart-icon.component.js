@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
 
-import { toggleHiddenCart } from "../../store/actions";
+import { toggleHiddenCart } from "../../store/actions/cart";
 import { selectCartItemsCount } from "../../store/selector/cart";
 
 import {
