@@ -16,7 +16,7 @@ export function* fetchCollectionsAsyncSaga() {
     const collectionMap = yield call(convertCollectionsSnapshotToMap, snapshot);
     yield put(fetchCollectionsSuccess(collectionMap));
   } catch (err) {
-    console.err(err);
+    console.log(err);
     yield put(fetchCollectionsFailure(err.message));
   }
 }
